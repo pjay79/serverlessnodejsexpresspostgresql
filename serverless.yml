@@ -1,0 +1,25 @@
+service: serverless-example-postgresql
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  profile: PJ@AWS
+  region: ap-southeast-2
+
+functions:
+  app:
+    handler: app.server
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+          
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
